@@ -1,0 +1,44 @@
+plugins {
+    // maven bom plugin
+    id 'io.spring.dependency-management' version '1.0.7.RELEASE'
+    // spring boot plugin
+    id 'org.springframework.boot' version '2.1.4.RELEASE' apply false
+}
+
+configure(subprojects) { project ->
+    group 'com.example'
+    version '1.0-SNAPSHOT'
+
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'maven-publish'
+
+    compileJava {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+        options.encoding = "UTF-8"
+    }
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+configure(allprojects) {
+    dependencyManagement {
+        imports {
+            mavenBom 'org.springframework.boot:spring-boot-dependencies:2.1.4.RELEASE'
+            mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Greenwich.RELEASE'
+        }
+
+        dependencies {
+            // JUnit 5
+            dependency 'org.junit.jupiter:junit-jupiter-api:5.4.2'
+            dependency 'org.junit.jupiter:junit-jupiter-engine:5.4.2'
+            // Needed for 5.4.x version
+            // https://github.com/junit-team/junit5/issues/1773
+            dependency 'org.junit.platform:junit-platform-commons:1.4.2'
+        }
+    }
+}
