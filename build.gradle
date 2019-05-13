@@ -19,13 +19,14 @@ configure(subprojects) { project ->
         targetCompatibility = 1.8
         options.encoding = "UTF-8"
     }
-
-    repositories {
-        mavenCentral()
-    }
 }
 
 configure(allprojects) {
+    
+    repositories {
+        mavenCentral()
+    }
+    
     dependencyManagement {
         imports {
             mavenBom 'org.springframework.boot:spring-boot-dependencies:2.1.4.RELEASE'
